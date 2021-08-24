@@ -1,5 +1,6 @@
 import React , { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { generateRandomNb } from "../helpers/common";
 
 export default function RandomCalculation({digitNumbers}: any)
 {   
@@ -30,10 +31,6 @@ function generateRandomCalculation(digitNumbers: number): string
     return `${firstNumber} ${operationType} ${secondNumber}`;
 }
 
-function generateRandomNb(limit: number): number
-{
-    return Math.floor(Math.random() * limit);
-}
 
 let calculationStyle = StyleSheet.create({
     container: {
