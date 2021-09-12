@@ -1,22 +1,33 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import RandomCalculation from './components/RandomCalculation';
-import CalcSolution from './components/CalcSolution';
+import CalcContext from './contexts/CalcContext';
+import ExerciseGenerator from './components/ExerciseGenerator';
 
 export default function App() {
+  const [calculationVerified, setCalculationVerified] = useState(false);
+  const [correctSolution, setCorrectSolution] = useState(0);
+  const [difficulty, setDifficulty] = useState(1);
+
+
   return (
-    <View style={styles.container}>
-      {/* <Text>Open up App.tsx to start working on your app!</Text> */}
-      <StatusBar style="auto" />
-      {/* <RandomCalculation digitNumbers="2"/> */}
-      <CalcSolution solution="3" />
-      <CalcSolution solution="3" fake={true}/>
-      <CalcSolution solution="3" fake={true}/>
-      <CalcSolution solution="3" fake={true}/>
-    </View>
+    <CalcContext.Provider value={{
+      calculationVerified,
+      setCalculationVerified,
+      correctSolution,
+      setCorrectSolution,
+      difficulty,
+      setDifficulty
+    }}>
+      <View style={styles.container}>
+        {/* <Text>Open up App.tsx to start working on your app!</Text> */}
+        <StatusBar style="auto" />
+        <ExerciseGenerator />
+      </View>
+    </CalcContext.Provider>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

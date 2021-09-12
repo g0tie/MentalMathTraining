@@ -1,10 +1,13 @@
 import React , { useState } from 'react';
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { generateRandomNb, padding } from "../helpers/common";
-
+import CalcContext from '../contexts/CalcContext';
 
 export default function CalcSolution({ solution , fake = false }) {
+
+  const { calculationVerified, setCalculationVerified } = useContext(CalcContext);
+
 
   let [backgroundColor, setBackgroundColor] = useState("none");
   let [generatedSolution, setGeneratedSolution] = useState(0);
@@ -12,17 +15,23 @@ export default function CalcSolution({ solution , fake = false }) {
   function verifySolution(solution :number, currentValue :number) :any
   {
 
+    if (calculationVerified) return ;
+    
     if (currentValue !== solution) {
       setBackgroundColor("red");
+      setCalculationVerified(true);
       return false;
     } 
 
     if (currentValue === solution) {
       setBackgroundColor("green");
+      setCalculationVerified(true);
       return true;
     }
 
     setBackgroundColor("none");
+    setCalculationVerified(true);
+
 
     return currentValue !== solution;
   }
@@ -45,9 +54,7 @@ export default function CalcSolution({ solution , fake = false }) {
       <View 
       style={ [styles.container, {backgroundColor: backgroundColor}] } 
       >
-        
           <Text style={styles.text}>{ generatedSolution }</Text>
-      
       
       </View>
     </TouchableOpacity>
@@ -82,6 +89,6 @@ const styles = StyleSheet.create({
     alignItems:"center",
   },
   text: {
-    fontSize: "xx-large"
+    fontSize: 30
   }
 });

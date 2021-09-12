@@ -1,11 +1,19 @@
 import React , { useState } from 'react';
+import { useEffect, useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { generateRandomNb } from "../helpers/common";
+import { generateRandomNb, executeCalculationString} from "../helpers/common";
+import CalcContext from '../contexts/CalcContext';
 
 export default function RandomCalculation({digitNumbers}: any)
 {   
-  
+    const { correctSolution, setCorrectSolution } = useContext(CalcContext);
     const [calculation, setCalulation] = useState(generateRandomCalculation(digitNumbers));
+
+    useEffect(() => {
+        let solution = executeCalculationString(calculation);
+        solution && setCorrectSolution(solution);
+    }, [ calculation ]);
+  
     
     return (
         <View style={calculationStyle.container}>
@@ -37,6 +45,6 @@ let calculationStyle = StyleSheet.create({
 
     },
     placeholder: {
-        fontSize: 'xxx-large'
+        fontSize: 40
     }
 });
