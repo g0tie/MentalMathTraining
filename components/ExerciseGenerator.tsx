@@ -11,10 +11,35 @@ export default function ExerciseGenerator({}) {
     return (
         <View>
             <RandomCalculation digitNumbers={difficulty}/>
-            <CalcSolution solution={correctSolution} />
+
+            {/* <CalcSolution solution={correctSolution} />
             <CalcSolution solution={correctSolution} fake={true}/>
             <CalcSolution solution={correctSolution} fake={true}/>
-            <CalcSolution solution={correctSolution} fake={true}/>
+            <CalcSolution solution={correctSolution} fake={true}/> */}
+            {
+                generateRandomSolutionPositions(correctSolution)
+            }
         </View>
     )
+}
+
+function generateRandomSolutionPositions(correctSolution: number)
+{
+    let correctSolutionPosition =  Math.floor(Math.random() * 4);
+    let calcSolutions = [];
+
+    for (let i = 0; i < 4; i++) {
+
+        if (i === correctSolutionPosition) {
+            calcSolutions.push(
+                <CalcSolution solution={correctSolution}/>
+            );
+        } else {
+            calcSolutions.push(
+                <CalcSolution solution={correctSolution} fake={true}/>
+            );
+        }
+    }
+
+    return calcSolutions;
 }

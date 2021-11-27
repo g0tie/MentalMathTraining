@@ -1,4 +1,4 @@
-function generateRandomNb(limit: number, start :number = 0): number
+function generateRandomNb(limit: number, start :number = 1): number
 {
     return Math.floor(Math.random() * limit) + start;
 }

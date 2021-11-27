@@ -33,7 +33,7 @@ function generateRandomCalculation(digitNumbers: number): string
 
     let firstNumber: number = generateRandomNb(parseInt(limit));
     let secondNumber: number = generateRandomNb(parseInt(limit));
-    let operationType: string = operationTypes[generateRandomNb(operationTypes.length)]
+    let operationType: string = operationTypes[generateRandomNb(operationTypes.length - 1)]
 
 
     return `${firstNumber} ${operationType} ${secondNumber}`;
