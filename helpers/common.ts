@@ -35,8 +35,26 @@ function executeCalculationString(calculation :string)
     }
 }
 
+function generateRandomCalculation(digitNumbers: number): string
+{
+    let limit: string = "";
+    let operationTypes: string[] = ["+", "x", "÷", "-"];
+    
+    for (let i = 0; i < digitNumbers; i++) {
+        limit += '9';
+    }
+
+    let firstNumber: number = generateRandomNb(parseInt(limit));
+    let secondNumber: number = generateRandomNb(parseInt(limit));
+    let operationType: string = operationTypes[generateRandomNb(operationTypes.length - 1)]
+
+
+    return `${firstNumber} ${operationType} ${secondNumber}`;
+}
+
 export {
     generateRandomNb,
     padding,
-    executeCalculationString
+    executeCalculationString,
+    generateRandomCalculation
 };

@@ -1,27 +1,50 @@
 import React , { useState } from 'react';
 import { useEffect, useContext } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import CalcContext from '../contexts/CalcContext';
 import RandomCalculation from './RandomCalculation';
 import CalcSolution from './CalcSolution';
+import { generateRandomCalculation } from '../helpers/common';
 
 export default function ExerciseGenerator({}) {
-      const { correctSolution, difficulty } = useContext(CalcContext);
+    const { 
+        correctSolution, 
+        difficulty, 
+        calcString, 
+        setCalcString, 
+        nextBtnToggle,
+        setNextBtnState,
+        setCalculationVerified
+    } = useContext(CalcContext);
+
+    function clearPreviousSettings()
+    {
+        setCalcString( generateRandomCalculation( difficulty ) );
+        setCalculationVerified(false);
+        setNextBtnState(false);
+    }
 
     return (
         <View>
-            <RandomCalculation digitNumbers={difficulty}/>
+            <RandomCalculation />
 
-            {/* <CalcSolution solution={correctSolution} />
-            <CalcSolution solution={correctSolution} fake={true}/>
-            <CalcSolution solution={correctSolution} fake={true}/>
-            <CalcSolution solution={correctSolution} fake={true}/> */}
             {
                 generateRandomSolutionPositions(correctSolution)
             }
+
+            {
+                nextBtnToggle &&  <Button 
+                    onPress={ () =>  clearPreviousSettings()}
+                    title="Next ->"
+                />
+            }
+           
+                
         </View>
     )
 }
+
+
 
 function generateRandomSolutionPositions(correctSolution: number)
 {
@@ -32,14 +55,15 @@ function generateRandomSolutionPositions(correctSolution: number)
 
         if (i === correctSolutionPosition) {
             calcSolutions.push(
-                <CalcSolution solution={correctSolution}/>
+                <CalcSolution key={i} solution={correctSolution}/>
             );
         } else {
             calcSolutions.push(
-                <CalcSolution solution={correctSolution} fake={true}/>
+                <CalcSolution key={i} solution={correctSolution} fake={true}/>
             );
         }
     }
 
     return calcSolutions;
 }
+

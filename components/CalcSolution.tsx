@@ -1,31 +1,54 @@
 import React , { useState } from 'react';
 import { useEffect, useContext } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { generateRandomNb, padding } from "../helpers/common";
+import { generateRandomCalculation, generateRandomNb, padding } from "../helpers/common";
 import CalcContext from '../contexts/CalcContext';
 
 export default function CalcSolution({ solution , fake = false }) {
 
-  const { calculationVerified, setCalculationVerified } = useContext(CalcContext);
-
+  const { 
+    calculationVerified, 
+    setCalculationVerified, 
+    difficulty, 
+    calcString, 
+    setCalcString,
+    nextBtnToggle
+  } = useContext(CalcContext);
 
   let [backgroundColor, setBackgroundColor] = useState("none");
   let [generatedSolution, setGeneratedSolution] = useState(0);
+  let { setNextBtnState } = useContext(CalcContext);
+
+  useEffect(() => {
+
+    console.log(calculationVerified)
+    if (!calculationVerified) setBackgroundColor("none");
+    
+  }, [calculationVerified])
 
   function verifySolution(solution :number, currentValue :number) :any
   {
 
-    if (calculationVerified) return ;
+    if (calculationVerified) {
+
+      setNextBtnState(true);
+
+      return false;
+    } 
     
     if (currentValue !== solution) {
       setBackgroundColor("red");
       setCalculationVerified(true);
+      setNextBtnState(true);
+
       return false;
     } 
 
     if (currentValue === solution) {
       setBackgroundColor("green");
       setCalculationVerified(true);
+      setNextBtnState(true);
+
       return true;
     }
 
