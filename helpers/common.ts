@@ -48,7 +48,6 @@ function generateRandomCalculation(digitNumbers: number): string
     let secondNumber: number = generateRandomNb(parseInt(limit));
     let operationType: string = operationTypes[generateRandomNb(operationTypes.length - 1)]
 
-
     return `${firstNumber} ${operationType} ${secondNumber}`;
 }
 

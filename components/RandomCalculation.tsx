@@ -10,12 +10,24 @@ import CalcContext from '../contexts/CalcContext';
 
 export default function RandomCalculation()
 {   
-    const { correctSolution, setCorrectSolution } = useContext(CalcContext);
-    const { calcString, setCalcString } = useContext(CalcContext);
+    const { 
+        calcString, 
+        setCalcString, 
+        difficulty, 
+        correctSolution, 
+        setCorrectSolution 
+    } = useContext(CalcContext);
    
     // calculate string and store in context
     useEffect(() => {
-        let solution = executeCalculationString(calcString);
+        let solution = executeCalculationString(calcString) ?? 0;
+
+        //check if solution is decimal number or not
+        if (Math.floor(solution) !== solution) {
+            setCalcString(generateRandomCalculation(difficulty));
+            solution = executeCalculationString(calcString) ?? 0;
+        }
+
         solution && setCorrectSolution(solution);
 
     }, [calcString]);

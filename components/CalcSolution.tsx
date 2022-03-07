@@ -20,10 +20,7 @@ export default function CalcSolution({ solution , fake = false }) {
   let { setNextBtnState } = useContext(CalcContext);
 
   useEffect(() => {
-
-    console.log(calculationVerified)
     if (!calculationVerified) setBackgroundColor("none");
-    
   }, [calculationVerified])
 
   function verifySolution(solution :number, currentValue :number) :any
